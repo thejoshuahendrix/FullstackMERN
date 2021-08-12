@@ -44,7 +44,7 @@ app.get("/posts", verifyToken, (req, res) => {
 
 function verifyToken(req,res,next) {
   //Get auth header
-  const bearerHeader = req.headers['token'];
+  const bearerHeader = req.headers['authorization'];
   //Check if bearer is undefined
   try{
       if(typeof bearerHeader !== undefined){

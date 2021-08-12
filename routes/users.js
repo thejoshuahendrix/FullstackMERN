@@ -5,14 +5,13 @@ const User = require("../models/User");
 const session = require('express-session');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-
 dotenv.config();
 
 function generateAccessToken(username) {
     return jwt.sign(username, "secretKey", { expiresIn: '1800s' });
   }
 
-router.get('/', (req,res) =>{
+router.get('/', verifyToken, (req,res) => {
     User.find()
         .sort({date: -1})
         .then((users) => res.json(users));
@@ -33,7 +32,7 @@ router.post("/register", async (request, response) => {
 
 router.post("/login", async (request, response) => {
     try {
-        var user = await User.findOne({ name: request.body.name }).exec();
+        const user = await User.findOne({ name: request.body.name }).exec();
         if(!user) {
             return response.status(400).send({ message: "The username does not exist" });
         }
@@ -50,12 +49,32 @@ router.post("/login", async (request, response) => {
     }
 });
 
-// router.get('/login', (req,res) => {
-//     res.redirect(307, 'https://discord.com/api/oauth2/authorize?client_id=874710663770017792&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fcallback&response_type=code&scope=identify%20email');
-// })
 
-// router.get('/callback', (req,res) => {
-//     res.send(req.query);
-// })
+function verifyToken(req,res,next) {
+    //Get auth header
+    const bearerHeader = req.headers['authorization'];
+    console.log("Header",bearerHeader);
+    //Check if bearer is undefined
+    try{
+        if(typeof bearerHeader !== undefined){
+            const bearer = bearerHeader.split(' ');
+            //get token from array
+            const bearerToken = bearer[1];
+            //set the token
+            req.token = bearerToken;
+            next();
+        }else{
+            //Forbidden
+            res.sendStatus(403);
+        }
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(403);
+    }
+    
+  }
+  
+
+
 
 module.exports = router;
