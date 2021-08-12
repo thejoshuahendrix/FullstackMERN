@@ -3,10 +3,14 @@ const router = express.Router();
 const Bcrypt = require('bcryptjs');
 const User = require("../models/User");
 const session = require('express-session');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 
+dotenv.config();
 
-router.use(session({ secret: 'secret', cookie: { maxAge: 60000 }}))
-
+function generateAccessToken(username) {
+    return jwt.sign(username, "secretKey", { expiresIn: '1800s' });
+  }
 
 router.get('/', (req,res) =>{
     User.find()
@@ -36,35 +40,22 @@ router.post("/login", async (request, response) => {
         if(!Bcrypt.compareSync(request.body.password, user.password)) {
             return response.status(400).send({ message: "The password is invalid" });
         }
-        response.send({ message: "The username and password combination is correct!" });
+        //response.send("The username and password combination is correct!");
         //Auth JWT Somewhere here
-        jwt.sign(
-            { id: user.id },
-            config.get("jwtSecret"),
-            { expiresIn: 3600 },
-            (err, token) => {
-              if (err) throw err;
-              res.json({
-                token,
-                user: {
-                  id: user.id,
-                  name: user.name,
-                  email: user.email,
-                },
-              });
-            }
-          );
+        const token = generateAccessToken({ username: request.body.name });
+        response.json(token);
     } catch (error) {
+        console.log(error);
         response.status(500).send(error);
     }
 });
 
-router.get('/login', (req,res) => {
-    res.redirect(307, 'https://discord.com/api/oauth2/authorize?client_id=874710663770017792&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fcallback&response_type=code&scope=identify%20email');
-})
+// router.get('/login', (req,res) => {
+//     res.redirect(307, 'https://discord.com/api/oauth2/authorize?client_id=874710663770017792&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fcallback&response_type=code&scope=identify%20email');
+// })
 
-router.get('/callback', (req,res) => {
-    res.send(req.query);
-})
+// router.get('/callback', (req,res) => {
+//     res.send(req.query);
+// })
 
 module.exports = router;

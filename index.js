@@ -1,13 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
-require('dotenv').config();
+require("dotenv").config();
 const chalk = require("chalk");
-const cors = require("cors")
-const session = require('express-session');
+const cors = require("cors");
+const session = require("express-session");
 const app = express();
 const PORT = 4000;
+const jwt = require('jsonwebtoken');
+
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 const DB = process.env.MONGO_URI;
 
@@ -22,40 +24,45 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-
 app.use("/", require("./routes/users"));
 
 
-// export async function discordFetchState(code: string): Promise<string> {
 
-//   const bodyFormData = new FormData();
-//   bodyFormData.append("code", code);
-//   bodyFormData.append("redirect_uri", process.env.DISCORD_REDIRECT_URI);
-//   bodyFormData.append("grant_type", "authorization_code");
-//   bodyFormData.append("client_id", process.env.DISCORD_CLIENT_ID);
-//   bodyFormData.append("client_secret", process.env.DISCORD_CLIENT_SECRET);
-//   bodyFormData.append("scope", "identify email");
+app.get("/posts", verifyToken, (req, res) => {
+  jwt.verify(req.headers.token, "secretKey", (err, authData) => {
+    if (err) {
+      res.sendStatus(403);
+      console.log(err)
+    } else {
+      res.json({
+        message: "Post Created",
+        authData,
+      });
+    }
+  });
+});
 
-//   const response = await fetch("https://discord.com/api/oauth2/token", {
-//       method: 'POST',
-//       headers: bodyFormData.getHeaders(),
-//       body: bodyFormData,
-//       redirect: 'follow'
-//   });
-
-//   const responseJsonParsed = await response.json();
-
-//   console.log(responseJsonParsed);
-
-//   if (!responseJsonParsed?.access_token)
-//       throw new Error('No access_token found');
-//   const access_token = responseJsonParsed.access_token;
-
-//   return access_token;
-// }
-
-
-
+function verifyToken(req,res,next) {
+  //Get auth header
+  const bearerHeader = req.headers['token'];
+  //Check if bearer is undefined
+  try{
+      if(typeof bearerHeader !== undefined){
+          const bearer = bearerHeader.split(' ');
+          //get token from array
+          const bearerToken = bearer[1];
+          //set the token
+          req.token = bearerToken;
+          next();
+      }else{
+          //Forbidden
+          res.sendStatus(403);
+      }
+  } catch (err) {
+      res.sendStatus(403);
+  }
+  
+}
 
 
 app.listen(PORT, () => {
