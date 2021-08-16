@@ -11,13 +11,18 @@ import Logout from './components/Logout';
 import UserList from './components/UserList';
 import PostList from './components/PostList';
 import AddPost from './components/AddPost';
+
 const jwt = require('jsonwebtoken');
+
+
 let decoded = jwt.decode(localStorage.getItem('token'));
+
 const App = () => {
+  
 const [user, setUser] = useState(decoded?decoded.username:"");
 
   return (
-    <div>
+    <div className="App">
       <NavBar />
       <Router>
         <Switch>
@@ -26,10 +31,10 @@ const [user, setUser] = useState(decoded?decoded.username:"");
           <Route path='/register' component={Register} />
           <Route path='/logout' component={Logout} />
           <Route path='/posts' component={() => <PostList username={decoded? decoded.username:""} />} />
-          <Route path='/addpost' component={() => <AddPost username={decoded? decoded.username:""} />} />
+          
         </Switch>
       </Router>
-      Hello {user};
+      {user? "Hello "+user:""}
     </div>
   );
 }

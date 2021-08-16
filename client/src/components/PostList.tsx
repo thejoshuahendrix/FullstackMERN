@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import AddPost from './AddPost';
 import PostCard from './PostCard';
 
 type PropType = {
@@ -28,6 +29,8 @@ const PostList = (props:PropType) => {
 
     return (
         <div>
+            <AddPost username={props.username} />
+            <h1>Posts</h1>
             {data.map(d => { return (<PostCard key={d._id} id={d._id} username={props.username} name={d.name} title={d.title} content={d.content} onDelete={handleDelete} />) })}
         </div>
     )

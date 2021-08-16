@@ -50,7 +50,6 @@ const NavBar = () => {
                         <li><a href="/register">Register</a></li>
                         <li><a href="/users">Users</a></li>
                         <li><a href="/logout">Logout</a></li>
-                        <li><a href="/addpost">Add Post</a></li>
                         <li><a href="/posts">PostList</a></li>
                     </ul>
                 </NavLinks>

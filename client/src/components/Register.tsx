@@ -22,6 +22,7 @@ const Register = () => {
     return (
         <div>
             <form>
+                <label>Name</label>
                 <input 
                 type='text'
                 name='name'
@@ -30,12 +31,15 @@ const Register = () => {
                 >
 
                 </input>
+
+                <label>Password</label>
                 <input type='password'
                 name='password'
                 value={password}
                 onChange={(e)=> setPassword(e.target.value)}>
 
                 </input>
+                <label>Email</label>
                 <input type='email'
                 name='email'
                 value={email}

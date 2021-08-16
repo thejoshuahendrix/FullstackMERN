@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
+
 type PropType = {
     username: string;
 }
+
 const AddPost = (props: PropType) => {
     const [name, setName] = useState(props.username);
     const [title, setTitle] = useState("");
@@ -18,24 +20,24 @@ const AddPost = (props: PropType) => {
             body: JSON.stringify(post)
         }).then(async (res) => {
             let response = await res.json();
-
-
-        }).then(res =>
-            window.location.replace('http://localhost:3000/posts')
-        )
+            
+        })
+        window.location.replace('http://localhost:3000/posts')
     }
 
 
     return (
         <div>
+            <h2>Add a Post</h2>
             <form>
-
+                <label>Title</label>
                 <input type='text'
                     name='title'
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}>
 
                 </input>
+                <label>Content</label>
                 <input type='text'
                     name='content'
                     value={content}

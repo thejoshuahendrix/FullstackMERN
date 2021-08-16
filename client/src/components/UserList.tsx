@@ -20,7 +20,11 @@ const UserList = (props: PropType) => {
 
     const handleDelete = (id: string) => {
         fetch('http://localhost:4000/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } })
-            .then(response => response.json()).then(data => setMessage(data));
+            .then(response => response.json()).then(data => 
+                setMessage(data));
+                localStorage.clear();
+                window.location.replace('http://localhost:3000/');
+                
 
 
 
@@ -29,8 +33,8 @@ const UserList = (props: PropType) => {
 
     return (
         <div>
-            <div>
-                here
+            <div className="App">
+                <h1>User List</h1>
                 {data.map(d => { return (<UserCard key={d._id} id={d._id} username={props.username} name={d.name} password={d.password} email={d.email} onDelete={handleDelete} />) })}
             </div>
         </div>
