@@ -1,30 +1,36 @@
-import React, { useState } from 'react'
-import { useEffect } from 'react'
-import Post from './Post';
+import React, { useEffect, useState } from 'react'
+import PostCard from './PostCard';
 
-const PostList = () => {
-    const [data, setData] = useState([{_id:"",name:"",email:"",password:""}]);
+type PropType = {
+    username:string;
+}
+const PostList = (props:PropType) => {
+    const [data, setData] = useState([{ _id: "", name: "", title: "", content: "" }]);
+    const[message, setMessage] =  useState('');
     const token = localStorage.getItem('token');
     useEffect(() => {
-        fetch('http://localhost:4000/', { method: "GET", headers: { "Authorization": "Bearer " + token } })
+        fetch('http://localhost:4000/posts', { method: "GET", headers: { "Authorization": "Bearer " + token } })
             .then(response => response.json())
             .then(res => setData(res));
 
-    
-}, [])
+
+    }, [message])
+
+    const handleDelete = (id: string) => {
+        fetch('http://localhost:4000/posts/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } })
+            .then(response => response.json()).then(data => setMessage(data));
 
 
 
-return (
-    <div>
+    }
+
+
+
+    return (
         <div>
-            here
-            {data.map(d=>{return(<Post key={d._id} name={d.name} password={d.password} email={d.email} />)})}
+            {data.map(d => { return (<PostCard key={d._id} id={d._id} username={props.username} name={d.name} title={d.title} content={d.content} onDelete={handleDelete} />) })}
         </div>
-    </div>
-
-
-)
+    )
 }
 
 export default PostList

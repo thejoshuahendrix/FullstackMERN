@@ -15,7 +15,7 @@ const Register = () => {
             let response = await res.json();
             console.log(response);
             setPassword('');
-            
+            window.location.replace('http://localhost:3000/')
         })
     }
     

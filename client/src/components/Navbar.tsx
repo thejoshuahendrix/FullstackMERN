@@ -47,10 +47,11 @@ const NavBar = () => {
                 <NavLinks>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="/login">Login</a></li>
                         <li><a href="/register">Register</a></li>
-                        <li><a href="/posts">Users</a></li>
+                        <li><a href="/users">Users</a></li>
                         <li><a href="/logout">Logout</a></li>
+                        <li><a href="/addpost">Add Post</a></li>
+                        <li><a href="/posts">PostList</a></li>
                     </ul>
                 </NavLinks>
             </NavWrapper>

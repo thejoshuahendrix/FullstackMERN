@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import NavBar from './components/Navbar';
 import {
   BrowserRouter as Router,
@@ -6,22 +6,30 @@ import {
   Route
 } from 'react-router-dom';
 import Login from './components/Login';
-import PostList from './components/PostList';
 import Register from './components/Register';
 import Logout from './components/Logout';
-
+import UserList from './components/UserList';
+import PostList from './components/PostList';
+import AddPost from './components/AddPost';
+const jwt = require('jsonwebtoken');
+let decoded = jwt.decode(localStorage.getItem('token'));
 const App = () => {
+const [user, setUser] = useState(decoded?decoded.username:"");
+
   return (
     <div>
       <NavBar />
       <Router>
         <Switch>
-          <Route path='/login' component={Login} />
-          <Route path='/posts' component={PostList} />
+          <Route exact path='/' component={Login} />
+          <Route path='/users' component={()=> <UserList username={decoded? decoded.username:""} />}  />
           <Route path='/register' component={Register} />
           <Route path='/logout' component={Logout} />
+          <Route path='/posts' component={() => <PostList username={decoded? decoded.username:""} />} />
+          <Route path='/addpost' component={() => <AddPost username={decoded? decoded.username:""} />} />
         </Switch>
       </Router>
+      Hello {user};
     </div>
   );
 }

@@ -12,15 +12,13 @@ function generateAccessToken(username) {
 }
 
 router.get("/", verifyToken, (req, res) => {
-  jwt.verify(req.token, "secretKey", (err, authData) => {
-    if (err) {
-      res.sendStatus(403);
-    } else {
-      User.find()
-        .sort({ date: -1 })
-        .then((users) => res.json(users));
-    }
-  });
+  User.find()
+    .sort({ date: -1 })
+    .then((users) => res.json(users));
+});
+
+router.delete("/:id", verifyToken, (req, res) => {
+  User.findByIdAndDelete(req.params.id).then(res.json({ message: "Deleted" }));
 });
 
 router.post("/register", async (request, response) => {
@@ -67,7 +65,14 @@ function verifyToken(req, res, next) {
       const bearerToken = bearer[1];
       //set the token
       req.token = bearerToken;
-      next();
+      jwt.verify(req.token, "secretKey", (err, data) => {
+        if (err) {
+          res.sendStatus(403);
+        } else {
+          res.user = data;
+          next();
+        }
+      });
     } else {
       //Forbidden
       res.sendStatus(403);
