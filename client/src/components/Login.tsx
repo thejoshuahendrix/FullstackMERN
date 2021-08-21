@@ -15,7 +15,8 @@ const Login = () => {
             let response = await res.json();
             localStorage.setItem("token", response);
             setPassword('');
-            window.location.replace('http://localhost:3000/posts')
+            localStorage.setItem('auth', 'true');
+            window.location.replace('/users')
 
         })
     }

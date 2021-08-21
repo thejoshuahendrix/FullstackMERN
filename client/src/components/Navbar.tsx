@@ -38,20 +38,25 @@ const NavLinks = styled.div`
     }
 `
 
-
 const NavBar = () => {
     return (
         <div>
             <NavWrapper>
                 <Logo><a href="/">Hendrix Software</a></Logo>
                 <NavLinks>
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/register">Register</a></li>
-                        <li><a href="/users">Users</a></li>
-                        <li><a href="/logout">Logout</a></li>
-                        <li><a href="/posts">PostList</a></li>
-                    </ul>
+                    {localStorage.getItem('auth')==="true"?
+                        <ul>
+                            <li><a href="/users">Users</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                            <li><a href="/posts">PostList</a></li>
+                            <li><a href="/customer">Customer Form</a></li>
+                            <li><a href="/customerlist">Customer List</a></li>
+
+                        </ul>
+                        : <ul>
+                            <li><a href="/">Login</a></li>
+                            <li><a href="/register">Register</a></li>
+                        </ul>}
                 </NavLinks>
             </NavWrapper>
         </div>
