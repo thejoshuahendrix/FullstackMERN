@@ -9,16 +9,15 @@ export const CustomerForm = () => {
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
 
+    const token = localStorage.getItem('token');
+
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const customer = { fname, lname, email, address: { street, city, state } }
         fetch('http://localhost:4000/customer', {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
             body: JSON.stringify(customer)
-        }).then(async (res) => {
-            let response = await res.json();
-            
         })
         window.location.replace('/customerlist')
     }

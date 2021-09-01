@@ -28,4 +28,4 @@ const PostCard = (props: PropType) => {
     )
 }
 
-export default PostCard
+export default PostCard;
