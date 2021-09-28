@@ -1,16 +1,20 @@
 # FullstackMERN
 The framework for user authentication managed in a MongoDB
 
+Create a .env file with your info from example-env.txt
 
-In the main folder
+Generally I run two different terminals
+
+In the main folder, first terminal
 
 ``yarn install``
 
 ``yarn start``
 
-``cd client``
 
-In the client folder
+
+In the client folder, second terminal
+
 
 ``yarn install``
 
