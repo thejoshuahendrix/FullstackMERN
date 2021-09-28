@@ -8,12 +8,14 @@ import {
 import Login from './components/Login';
 import Register from './components/Register';
 import Logout from './components/Logout';
-import UserList from './components/UserList';
-import PostList from './components/PostList';
+import UserList from './components/User/UserList';
+import PostList from './components/Posts/PostList';
 import Hero from './components/Hero';
-import CustomerPage from './components/CustomerPage';
+import CustomerPage from './components/Customer/CustomerPage';
 import jwt from 'jsonwebtoken';
-import MyAccount from './components/MyAccount';
+import MyAccount from './components/User/MyAccount';
+
+console.log(process.env.REACT_APP_ADMIN_KEY);
 
 
 let decoded: any = jwt.decode(localStorage.getItem('token') ?? "");
@@ -31,12 +33,12 @@ const App = () => {
 
       <Router>
         <Switch>
-          <Route exact path='/' component={() => <Hero isLoggedIn={isLoggedIn} header="Home" />} />
+          <Route exact path='/' component={() => <div style={{ margin: '2rem', padding: '2rem' }}> <Hero isLoggedIn={isLoggedIn} header="Home" /> </div>} />
           <Route exact path='/login' component={() => <Login />} />
           <Route path='/users' component={() => <UserList isLoggedIn={isLoggedIn} isAdmin={isAdmin} username={decoded ? decoded.username : ""} />} />
           <Route path='/register' component={Register} />
           <Route path='/logout' component={Logout} />
-          <Route path='/customer' component={CustomerPage} />
+          <Route path='/customer' component={() => <CustomerPage isLoggedIn={isLoggedIn} />} />
           <Route path='/posts' component={() => <PostList isLoggedIn={isLoggedIn} isAdmin={isAdmin} username={decoded ? decoded.username : ""} />} />
           <Route path='/account' component={() => <MyAccount isLoggedIn={isLoggedIn} />} />
         </Switch>

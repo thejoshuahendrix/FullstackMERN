@@ -26,7 +26,7 @@ const NavbarHeader = (props: PropTypes) => {
 
     return (
         <div>
-            <Navbar color="dark" dark expand="md">
+            <Navbar color="dark" dark expand="md" style={{paddingLeft:40}}>
                 <NavbarBrand href="/">Fullstack Project</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>

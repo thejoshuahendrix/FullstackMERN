@@ -12,9 +12,13 @@ const Logout = () => {
 
     return (
 
-        <div style={{ display: 'flex', flexDirection: 'column', padding: '2rem' }}>
+        <div style={{ margin: '2rem', padding: '2rem' }} >
             <Hero isLoggedIn={true} header="Logout Page" />
-            <Button style={{width:'30vw'}} onClick={removeToken}>Logout</Button>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+
+
+                <Button style={{ width: '30vw' }} onClick={removeToken}>Logout</Button>
+            </div>
         </div>
     )
 }

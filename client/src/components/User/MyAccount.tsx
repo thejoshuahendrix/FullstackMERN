@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import jwt from 'jsonwebtoken';
 import UserCard from './UserCard';
 import { Table } from 'reactstrap';
-import Hero from './Hero';
+import Hero from '../Hero';
 
 
 let decoded: any = jwt.decode(localStorage.getItem('token') ?? "");
@@ -22,7 +22,7 @@ const MyAccount = (props: PropType) => {
             .then(res => setData(res));
 
 
-    });
+    }, [token]);
 
     const handleDelete = (id: string) => {
         fetch('http://localhost:4000/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } });
@@ -36,20 +36,11 @@ const MyAccount = (props: PropType) => {
 
     return (
         <>
-            <Hero isLoggedIn={props.isLoggedIn} header="My Accoount" />
-            <Table style={{ marginLeft: 40 }}>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Password</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <UserCard isAdmin={false} name={data.name} password={data.password} email={data.email} id={data._id} username={data.name} role={data.role} onDelete={handleDelete} />
-                </tbody>
-            </Table>
+        <div style={{ margin: '2rem', padding: '2rem' }}>
+            <Hero isLoggedIn={props.isLoggedIn} header="My Account" />
+
+            <UserCard isAdmin={false} name={data.name} password={data.password} email={data.email} id={data._id} username={data.name} role={data.role} onDelete={handleDelete} />
+        </div>
         </>
     )
 }

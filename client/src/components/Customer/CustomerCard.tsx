@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'reactstrap'
+import { Button, Card } from 'reactstrap'
 
 
 
@@ -18,18 +18,15 @@ type PropType = {
 const CustomerCard = (props: PropType) => {
     const deleteItem = () => props.onDelete(props.id)
     return (
-        <>
-            <tr>
-
-
-                <td> {props.name}</td>
-                <td> {`${props.street} ${props.city}, ${props.state}`}  </td>
-                <td> {props.email}</td>
-
+        <Card>
+            <div style={{ padding:20, display: 'flex', flexDirection: "row", justifyContent: 'space-between' }}>
+                <div> {props.name}</div>
+                <div> {`${props.street} ${props.city}, ${props.state}`}  </div>
+                <div> {props.email}</div>
                 <Button className="bg-danger" onClick={deleteItem}>Delete</Button>
 
-            </tr>
-        </>
+            </div>
+        </Card>
     )
 }
 
