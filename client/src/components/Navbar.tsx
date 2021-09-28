@@ -1,66 +1,94 @@
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import {
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    Badge,
+} from 'reactstrap';
 
+type PropTypes = {
+    user: string;
+    isAdmin: boolean;
+    isLoggedIn: boolean;
+}
+const NavbarHeader = (props: PropTypes) => {
+    const [isOpen, setIsOpen] = useState(false);
 
+    const toggle = () => setIsOpen(!isOpen);
 
-const NavWrapper = styled.div`
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: #363636;
-    top:0;
-    width:100vw;
-`
-
-const Logo = styled.div`
-    margin: auto;
-    margin-left: 10vw;
-    text-align: center;
-    font-size: large;
-    font-family: monospace;
-    a{
-        color: white;
-        text-decoration: none;
-    }
-  `
-
-const NavLinks = styled.div`
-    width: 30vw;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    ul{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        list-style: none;
-      }
-    a{
-        color: white;
-        text-decoration: none;
-    }
-`
-
-const NavBar = () => {
     return (
         <div>
-            <NavWrapper>
-                <Logo><a href="/">Hendrix Software</a></Logo>
-                <NavLinks>
-                    {localStorage.getItem('auth')==="true"?
-                        <ul>
-                            <li><a href="/users">Users</a></li>
-                            <li><a href="/logout">Logout</a></li>
-                            <li><a href="/posts">PostList</a></li>
-                            <li><a href="/customer">Customer Form</a></li>
-                            <li><a href="/customerlist">Customer List</a></li>
+            <Navbar color="dark" dark expand="md">
+                <NavbarBrand href="/">Fullstack Project</NavbarBrand>
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="mr-auto" navbar>
+                        {
+                            props.isAdmin ? <NavItem>
+                                <NavLink href="/users">Users</NavLink>
+                            </NavItem> : ""
+                        }
 
-                        </ul>
-                        : <ul>
-                            <li><a href="/">Login</a></li>
-                            <li><a href="/register">Register</a></li>
-                        </ul>}
-                </NavLinks>
-            </NavWrapper>
+                        <NavItem>
+                            <NavLink href="/posts">Posts</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="/customer">Customers</NavLink>
+                        </NavItem>
+                        <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle nav caret>
+                                Account:{props.isLoggedIn ? <Badge >{props.user} Logged In</Badge> : <Badge>Logged Out</Badge>}
+                            </DropdownToggle>
+                            <DropdownMenu right>
+                                {
+                                    props.isLoggedIn ? "" :
+                                        <DropdownItem >
+                                            <NavLink style={{ color: 'black' }} href="/register">Register</NavLink>
+                                        </DropdownItem>
+                                }
+
+                                {
+                                    props.isLoggedIn ?
+
+                                        <DropdownItem >
+                                            <NavLink style={{ color: 'black' }} href="/account">My Account</NavLink>
+                                        </DropdownItem>
+                                        : ""
+                                }
+
+                                <DropdownItem divider />
+                                {
+                                    props.isLoggedIn ? "" :
+                                        <DropdownItem >
+                                            <NavLink style={{ color: 'black' }} href="/login">Login</NavLink>
+                                        </DropdownItem>
+                                }
+
+                                {
+                                    props.isLoggedIn ?
+
+                                        <DropdownItem >
+                                            <NavLink style={{ color: 'black' }} href="/logout">Logout</NavLink>
+                                        </DropdownItem>
+                                        : ""
+                                }
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+
+                    </Nav>
+                </Collapse>
+            </Navbar>
+
         </div>
-    )
+    );
 }
 
-export default NavBar
+export default NavbarHeader;

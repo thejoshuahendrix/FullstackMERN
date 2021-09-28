@@ -2,23 +2,37 @@ const express = require("express");
 const router = express.Router();
 const Bcrypt = require("bcryptjs");
 const User = require("../models/User");
-const session = require("express-session");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const { response } = require("express");
 dotenv.config();
 
 function generateAccessToken(username) {
-  return jwt.sign(username, "secretKey", { expiresIn: "1800s" });
+  return jwt.sign(username, process.env.JWT_TOKEN, { expiresIn: "1800s" });
 }
 
 router.get("/", verifyToken, (req, res) => {
-  User.find()
-    .sort({ date: -1 })
-    .then((users) => res.json(users));
+  if (res.user.role == process.env.ADMIN_KEY) {
+    User.find()
+      .sort({ date: -1 })
+      .then((users) => res.json(users));
+  }
+});
+router.get("/user/:name", verifyToken, async (req, res) => {
+  const user = await User.findOne({ name: req.params.name }).exec();
+  if (!user) {
+    return res.status(400).send({ message: "The username does not exist" });
+  }
+  res.json(user);
 });
 
-router.delete("/:id", verifyToken, (req, res) => {
-  User.findByIdAndDelete(req.params.id).then(res.json({ message: "Deleted" }));
+router.delete("/:id", verifyToken, async (req, res) => {
+  const user = await User.findOne({ name: res.user.username }).exec();
+  if (user._id == req.params.id || user.role == process.env.ADMIN_KEY) {
+    User.findByIdAndDelete(req.params.id).then(
+      res.json({ message: "Deleted" })
+    );
+  }
 });
 
 router.post("/register", async (request, response) => {
@@ -45,7 +59,10 @@ router.post("/login", async (request, response) => {
     }
     //response.send("The username and password combination is correct!");
     //Auth JWT Somewhere here
-    const token = generateAccessToken({ username: request.body.name });
+    const token = generateAccessToken({
+      username: request.body.name,
+      role: user.role,
+    });
     response.json(token);
   } catch (error) {
     console.log(error);
@@ -65,7 +82,7 @@ function verifyToken(req, res, next) {
       const bearerToken = bearer[1];
       //set the token
       req.token = bearerToken;
-      jwt.verify(req.token, "secretKey", (err, data) => {
+      jwt.verify(req.token, process.env.JWT_TOKEN, (err, data) => {
         if (err) {
           res.sendStatus(403);
         } else {

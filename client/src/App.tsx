@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavBar from './components/Navbar';
+import NavBarHeader from './components/Navbar';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,36 +10,39 @@ import Register from './components/Register';
 import Logout from './components/Logout';
 import UserList from './components/UserList';
 import PostList from './components/PostList';
-import AddPost from './components/AddPost';
-import CustomerForm from './components/CustomerForm';
-import CustomerList from './components/CustomerList';
+import Hero from './components/Hero';
+import CustomerPage from './components/CustomerPage';
+import jwt from 'jsonwebtoken';
+import MyAccount from './components/MyAccount';
 
-const jwt = require('jsonwebtoken');
 
-
-let decoded = jwt.decode(localStorage.getItem('token'));
+let decoded: any = jwt.decode(localStorage.getItem('token') ?? "");
 
 const App = () => {
-  
-const [user, setUser] = useState(decoded?decoded.username:"");
-
-
+  const [user] = useState(decoded ? decoded.username : "");
+  const [role] = useState(decoded ? decoded.role : "");
+  const [isAdmin] = useState(role === 'h67524')
+  const [isLoggedIn] = useState(decoded ? true : false);
 
   return (
     <div className="App">
-      <NavBar/>
+      <NavBarHeader isLoggedIn={isLoggedIn} isAdmin={isAdmin} user={user} />
+
+
       <Router>
         <Switch>
-          <Route exact path='/' component={()=><Login/>} />
-          <Route path='/users' component={()=> <UserList username={decoded? decoded.username:""} />}  />
+          <Route exact path='/' component={() => <Hero isLoggedIn={isLoggedIn} header="Home" />} />
+          <Route exact path='/login' component={() => <Login />} />
+          <Route path='/users' component={() => <UserList isLoggedIn={isLoggedIn} isAdmin={isAdmin} username={decoded ? decoded.username : ""} />} />
           <Route path='/register' component={Register} />
           <Route path='/logout' component={Logout} />
-          <Route path='/customer' component={CustomerForm} />
-          <Route path='/customerlist' component={CustomerList} />
-          <Route path='/posts' component={() => <PostList username={decoded? decoded.username:""} />} />
+          <Route path='/customer' component={CustomerPage} />
+          <Route path='/posts' component={() => <PostList isLoggedIn={isLoggedIn} isAdmin={isAdmin} username={decoded ? decoded.username : ""} />} />
+          <Route path='/account' component={() => <MyAccount isLoggedIn={isLoggedIn} />} />
         </Switch>
       </Router>
-      {user? "Hello "+user:""}
+
+
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Redirect } from 'react-router';
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import Hero from './Hero';
 
 const Login = () => {
     const [name, setName] = useState('');
@@ -16,33 +17,28 @@ const Login = () => {
             localStorage.setItem("token", response);
             setPassword('');
             localStorage.setItem('auth', 'true');
-            window.location.replace('/users')
+            window.location.replace('/posts')
 
         })
     }
 
     return (
-        <div>
-            <h1>Login Page</h1>
-            <form>
-                <label>Name:</label>
-                <input
-                    type='text'
-                    name='name'
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                >
+        <div style={{ margin: '2rem', padding: '2rem' }}>
 
-                </input>
-                <label>Password:</label>
-                <input type='password'
-                    name='password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}>
+            <Hero isLoggedIn={true} header="Login Page" />
 
-                </input>
-                <input type='submit' onClick={handleSubmit} placeholder="Login"></input>
-            </form>
+            <Form>
+            <FormGroup>
+            <Label for="exampleEmail">Name</Label>
+            <Input style={{width:'30vw'}} type ="text" name="name" id="name" placeholder="Enter Name" onChange={(e) => setName(e.target.value)} />
+            </FormGroup>
+            <FormGroup>
+            <Label for="exampleEmail">Password</Label>
+            <Input style={{width:'30vw'}} type ="password" name="password" id="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} />
+            </FormGroup>
+            <Button onClick={handleSubmit}>Submit</Button>
+            </Form>
+            Need an account? Click <a href="/register" >Here</a> to Register
         </div>
     )
 }

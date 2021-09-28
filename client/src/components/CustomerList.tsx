@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Table } from 'reactstrap';
 import CustomerCard from './CustomerCard';
 
 const CustomerList = () => {
@@ -11,7 +12,6 @@ const CustomerList = () => {
         address: { street: "", city: "", state: "" }
     }]);
 
-    const [message, setMessage] = useState('');
 
     const token = localStorage.getItem('token');
 
@@ -21,36 +21,44 @@ const CustomerList = () => {
             .then(res => setData(res));
 
 
-    }, [message])
+    },[token]);
 
     const handleDelete = (id: string) => {
-        fetch('http://localhost:4000/customer/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } })
-            .then(response => response.json()).then(data =>
-                setMessage(data));
-
-
-
-
+        fetch('http://localhost:4000/customer/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } });
+         window.location.replace('http://localhost:3000/customer');   
     }
 
 
 
 
     return (
-        <>
-            {data.map(d => {
-                return (
-                    <CustomerCard
-                        key={d._id}
-                        id={d._id}
-                        name={d.fname + " " + d.lname}
-                        city={d.address.city}
-                        street={d.address.street}
-                        state={d.address.state}
-                        email={d.email}
-                        onDelete={handleDelete} />)
-            })}
-        </>
+        <div style={{margin:'2rem', padding:'2rem'}}>
+
+
+            <Table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map(d => {
+                        return (
+                            <CustomerCard
+                                key={d._id}
+                                id={d._id}
+                                name={d.fname + " " + d.lname}
+                                city={d.address.city}
+                                street={d.address.street}
+                                state={d.address.state}
+                                email={d.email}
+                                onDelete={handleDelete} />)
+                    })}
+                </tbody>
+            </Table>
+        </div>
     )
 }
 

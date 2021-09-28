@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const chalk = require("chalk");
 const cors = require("cors");
-
 const app = express();
 const PORT = 4000;
 const jwt = require("jsonwebtoken");

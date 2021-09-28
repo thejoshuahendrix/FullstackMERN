@@ -1,12 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
+import { Button, Form, Input, Label } from 'reactstrap';
 
 type PropType = {
     username: string;
 }
 
 const AddPost = (props: PropType) => {
-    const [name, setName] = useState(props.username);
+    const [name] = useState(props.username);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const token = localStorage.getItem('token');
@@ -18,10 +19,7 @@ const AddPost = (props: PropType) => {
             method: "POST",
             headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
             body: JSON.stringify(post)
-        }).then(async (res) => {
-            let response = await res.json();
-            
-        })
+        });
         window.location.replace('http://localhost:3000/posts')
     }
 
@@ -29,23 +27,25 @@ const AddPost = (props: PropType) => {
     return (
         <div>
             <h2>Add a Post</h2>
-            <form>
-                <label>Title</label>
-                <input type='text'
+            <Form style={{ marginBottom: '2rem' }}>
+                <Label>Title</Label>
+                <Input type='text'
                     name='title'
+
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}>
 
-                </input>
-                <label>Content</label>
-                <input type='text'
+                </Input>
+                <Label>Content</Label>
+                <Input type='textarea'
                     name='content'
+
                     value={content}
                     onChange={(e) => setContent(e.target.value)}>
 
-                </input>
-                <input type='submit' onClick={handleSubmit}></input>
-            </form>
+                </Input>
+                <Button type='submit' onClick={handleSubmit}>Add Post</Button>
+            </Form >
         </div>
     )
 }

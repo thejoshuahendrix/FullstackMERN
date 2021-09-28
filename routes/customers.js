@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Customer = require("../models/Customer");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 
 router.get("/customer", verifyToken, async (req, res) => {
   try {
@@ -12,6 +14,7 @@ router.get("/customer", verifyToken, async (req, res) => {
     response.status(500).send(err);
   }
 });
+
 router.post("/customer", verifyToken, async (request, response) => {
   try {
     var customer = new Customer(request.body);
@@ -27,6 +30,7 @@ router.delete("/customer/:id", verifyToken, (req, res) => {
     res.json({ message: "Deleted" })
   );
 });
+
 function verifyToken(req, res, next) {
   //Get auth header
   const bearerHeader = req.headers["authorization"];
@@ -39,7 +43,7 @@ function verifyToken(req, res, next) {
       const bearerToken = bearer[1];
       //set the token
       req.token = bearerToken;
-      jwt.verify(req.token, "secretKey", (err, data) => {
+      jwt.verify(req.token, process.env.JWT_TOKEN, (err, data) => {
         if (err) {
           res.sendStatus(403);
         } else {
