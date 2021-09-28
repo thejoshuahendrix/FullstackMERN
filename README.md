@@ -21,3 +21,4 @@ In the client folder, second terminal
 ``yarn start``
 
 
+!(https://github.com/thejoshuahendrix/FullstackMERN/blob/main/client/src/assets/5oigwm.gif?raw=true)
