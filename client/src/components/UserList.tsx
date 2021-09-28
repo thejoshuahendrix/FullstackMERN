@@ -21,8 +21,8 @@ const UserList = (props: PropType) => {
 
     const handleDelete = (id: string) => {
         fetch('http://localhost:4000/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } });
+        window.location.replace('http://localhost:3000/users');
     }
-
 
     return (
         <div style={{ margin: '2rem', padding: '2rem' }}>
