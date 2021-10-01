@@ -15,7 +15,7 @@ import CustomerPage from './components/Customer/CustomerPage';
 import jwt from 'jsonwebtoken';
 import MyAccount from './components/User/MyAccount';
 
-console.log(process.env.REACT_APP_ADMIN_KEY);
+console.log();
 
 
 let decoded: any = jwt.decode(localStorage.getItem('token') ?? "");
@@ -23,7 +23,7 @@ let decoded: any = jwt.decode(localStorage.getItem('token') ?? "");
 const App = () => {
   const [user] = useState(decoded ? decoded.username : "");
   const [role] = useState(decoded ? decoded.role : "");
-  const [isAdmin] = useState(role === 'h67524')
+  const [isAdmin] = useState(role === process.env.REACT_APP_ADMIN_KEY)
   const [isLoggedIn] = useState(decoded ? true : false);
 
   return (
