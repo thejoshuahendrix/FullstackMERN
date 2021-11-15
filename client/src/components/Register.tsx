@@ -9,7 +9,7 @@ const Register = () => {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const user = { name, password, email };
-        fetch(process.env.REACT_APP_SERVER_URL+'/register', {
+        fetch(process.env.REACT_APP_SERVER_URL+'/api/register', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)

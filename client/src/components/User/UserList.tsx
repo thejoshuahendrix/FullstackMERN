@@ -14,14 +14,14 @@ const UserList = (props: PropType) => {
     const [data, setData] = useState([{ _id: "", name: "", email: "", password: "", role: "" }]);
     const token = localStorage.getItem('token');
     useEffect(() => {
-        fetch('http://localhost:4000/', { method: "GET", headers: { "Authorization": "Bearer " + token } })
+        fetch('/api/', { method: "GET", headers: { "Authorization": "Bearer " + token } })
             .then(response => response.json())
             .then(res => setData(res));
     }, [token]);
 
     const handleDelete = (id: string) => {
-        fetch('http://localhost:4000/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } });
-        window.location.replace('http://localhost:3000/users');
+        fetch('/api/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } });
+        window.location.replace('/users');
     }
 
     return (

@@ -13,7 +13,7 @@ const PostList = (props: PropType) => {
     const [data, setData] = useState([{ _id: "", name: "", title: "", content: "", date: "" }]);
     const token = localStorage.getItem('token');
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER_URL+'/api/posts', { method: "GET", headers: { "Authorization": "Bearer " + token } })
+        fetch('/api/posts', { method: "GET", headers: { "Authorization": "Bearer " + token } })
             .then(response => response.json())
             .then(res => setData(res));
     }, [token])
