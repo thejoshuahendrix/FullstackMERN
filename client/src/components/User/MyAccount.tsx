@@ -17,7 +17,7 @@ const MyAccount = (props: PropType) => {
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER_URL+'/user/' + decoded.username, { method: "GET", headers: { "Authorization": "Bearer " + token } })
+        fetch('/api/user/' + decoded.username, { method: "GET", headers: { "Authorization": "Bearer " + token } })
             .then(response => response.json())
             .then(res => setData(res));
 
@@ -25,7 +25,7 @@ const MyAccount = (props: PropType) => {
     }, [token]);
 
     const handleDelete = (id: string) => {
-        fetch(process.env.REACT_APP_SERVER_URL + "/" +id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } });
+        fetch("/api/" +id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } });
         localStorage.clear();
         window.location.replace('/');
 

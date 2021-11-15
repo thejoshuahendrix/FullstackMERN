@@ -15,7 +15,7 @@ export const CustomerForm = () => {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const customer = { fname, lname, email, address: { street, city, state } }
-        fetch(process.env.REACT_APP_SERVER_URL+'/api/customer', {
+        fetch('/api/customer', {
             method: "POST",
             headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
             body: JSON.stringify(customer)
