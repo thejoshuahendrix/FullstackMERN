@@ -15,12 +15,12 @@ const AddPost = (props: PropType) => {
         e.preventDefault();
         const post = { name, title, content };
 
-        fetch('http://localhost:4000/posts', {
+        fetch(process.env.REACT_APP_SERVER_URL+'/api/posts', {
             method: "POST",
             headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
             body: JSON.stringify(post)
         });
-        window.location.replace('http://localhost:3000/posts')
+        window.location.replace('/posts')
     }
 
 

@@ -16,7 +16,7 @@ const CustomerList = () => {
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        fetch('http://localhost:4000/customer', { method: "GET", headers: { "Authorization": "Bearer " + token } })
+        fetch(process.env.REACT_APP_SERVER_URL + '/api/customer', { method: "GET", headers: { "Authorization": "Bearer " + token } })
             .then(response => response.json())
             .then(res => setData(res));
 
@@ -24,8 +24,8 @@ const CustomerList = () => {
     }, [token]);
 
     const handleDelete = (id: string) => {
-        fetch('http://localhost:4000/customer/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } });
-        window.location.replace('http://localhost:3000/customer');
+        fetch(process.env.REACT_APP_SERVER_URL + '/api/customer/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } });
+        window.location.replace('/customer');
     }
 
 

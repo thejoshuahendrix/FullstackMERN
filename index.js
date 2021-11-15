@@ -28,9 +28,9 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-app.use("/", require("./routes/users"));
-app.use("/", require("./routes/posts"));
-app.use("/", require("./routes/customers"));
+app.use("/api/", require("./routes/users"));
+app.use("/api/", require("./routes/posts"));
+app.use("/api/", require("./routes/customers"));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));

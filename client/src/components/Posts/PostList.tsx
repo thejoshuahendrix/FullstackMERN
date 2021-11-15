@@ -13,15 +13,15 @@ const PostList = (props: PropType) => {
     const [data, setData] = useState([{ _id: "", name: "", title: "", content: "", date: "" }]);
     const token = localStorage.getItem('token');
     useEffect(() => {
-        fetch(process.env.REACT_APP_SERVER_URL+'/posts', { method: "GET", headers: { "Authorization": "Bearer " + token } })
+        fetch(process.env.REACT_APP_SERVER_URL+'/api/posts', { method: "GET", headers: { "Authorization": "Bearer " + token } })
             .then(response => response.json())
             .then(res => setData(res));
     }, [token])
 
     const handleDelete = (id: string) => {
-        fetch(process.env.REACT_APP_SERVER_URL+'/posts/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } })
+        fetch(process.env.REACT_APP_SERVER_URL+'/api/posts/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } })
             .then(response => response.json());
-        window.location.replace('http://localhost:3000/posts')
+        window.location.replace('/posts')
 
 
     }

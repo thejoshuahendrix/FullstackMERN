@@ -9,7 +9,7 @@ const Register = () => {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const user = { name, password, email };
-        fetch('http://localhost:4000/register', {
+        fetch(process.env.REACT_APP_SERVER_URL+'/register', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
@@ -17,7 +17,7 @@ const Register = () => {
             let response = await res.json();
             console.log(response);
             setPassword('');
-            window.location.replace('http://localhost:3000/')
+            window.location.replace('/')
         })
     }
 

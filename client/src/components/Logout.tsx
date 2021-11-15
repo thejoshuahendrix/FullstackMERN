@@ -6,7 +6,7 @@ const Logout = () => {
 
     const removeToken = () => {
         localStorage.clear();
-        window.location.replace('http://localhost:3000/')
+        window.location.replace('/')
     }
 
 

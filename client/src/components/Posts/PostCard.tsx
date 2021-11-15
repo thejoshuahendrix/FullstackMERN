@@ -23,9 +23,9 @@ const PostCard = (props: PropType) => {
 
     const deleteItem = () => props.onDelete(props.id);
     const editItem = (id: string, title: string, content: string) => {
-        fetch('http://localhost:4000/posts/update/' + id, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content, title, date: new Date() }) });
+        fetch(process.env.REACT_APP_SERVER_URL+'/posts/update/' + id, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content, title, date: new Date() }) });
 
-        window.location.replace('http://localhost:3000/posts');
+        window.location.replace('/posts');
 
     }
 
