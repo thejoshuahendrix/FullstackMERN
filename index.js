@@ -4,7 +4,7 @@ require("dotenv").config();
 const chalk = require("chalk");
 const cors = require("cors");
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const jwt = require("jsonwebtoken");
 const { response } = require("express");
 app.use(express.json());
