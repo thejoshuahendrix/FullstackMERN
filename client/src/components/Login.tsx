@@ -8,7 +8,7 @@ const Login = () => {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const user = { name, password };
-        fetch(process.env.REACT_APP_SERVER_URL+'/api/login', {
+        fetch('/api/login', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
