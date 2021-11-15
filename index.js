@@ -11,11 +11,8 @@ app.use(express.json());
 app.use(cors());
 const path = require("path")
 
-// ... other app.use middleware 
 app.use(express.static(path.join(__dirname, "client", "build")))
 
-// ...
-// Right before your app.listen(), add this:
 
 
 const DB = process.env.MONGO_URI;
