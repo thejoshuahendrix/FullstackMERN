@@ -63,7 +63,7 @@ router.post("/login", async (request, response) => {
       username: request.body.name,
       role: user.role,
     });
-    response.json(token);
+    response.status(200).json(token);
   } catch (error) {
     console.log(error);
     response.status(500).send(error);

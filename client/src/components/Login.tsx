@@ -16,7 +16,7 @@ const Login = () => {
             body: JSON.stringify(user)
         }).then(async (res) => {
             let response = await res.json();
-            if (response.status === 200) {
+            if (res.status === 200) {
                 localStorage.setItem("token", response);
                 setPassword('');
                 localStorage.setItem('auth', 'true');
