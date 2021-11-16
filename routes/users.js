@@ -40,7 +40,7 @@ router.post("/register", async (request, response) => {
     request.body.password = Bcrypt.hashSync(request.body.password, 10);
     var user = new User(request.body);
     var result = await user.save();
-    response.send(result);
+    response.status(200).send(result);
   } catch (error) {
     response.status(500).send(error);
   }
