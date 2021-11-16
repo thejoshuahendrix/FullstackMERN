@@ -20,12 +20,19 @@ const PostCard = (props: PropType) => {
     const [isEdit, setIsEdit] = useState(false);
     const [inputtitle, setTitle] = useState(props.title);
     const [inputcontent, setContent] = useState(props.content);
+    const [error, setError] = useState('');
 
     const deleteItem = () => props.onDelete(props.id);
     const editItem = (id: string, title: string, content: string) => {
-        fetch(process.env.REACT_APP_SERVER_URL+'/posts/update/' + id, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content, title, date: new Date() }) });
+        fetch('/posts/update/' + id, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content, title, date: new Date() }) }).then(res => {
+            if (res.status === 200) {
+                window.location.replace('/posts');
+            } else {
+                setError('Something went wrong.')
+            }   
+        });
 
-        window.location.replace('/posts');
+
 
     }
 
@@ -35,7 +42,7 @@ const PostCard = (props: PropType) => {
     return (
         <div className="card" style={{ marginBottom: '2rem', border: '1px solid black', width: "60vw", padding: "2rem" }}>
             <tr>
-                <div style={{ display: 'flex', justifyContent:'space-between' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <h3 style={{ marginRight: '2rem' }}>{isEdit ? <input type='text' placeholder={props.title} onChange={(e) => { setTitle(e.target.value) }} value={inputtitle} ></input> : props.title}</h3><div>{props.name}</div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -54,7 +61,7 @@ const PostCard = (props: PropType) => {
             </tr>
 
             <div>{isEdit ? <textarea placeholder={props.content} onChange={(e) => { setContent(e.target.value) }} value={inputcontent}></textarea> : props.content}</div>
-
+            <div style={{ color: 'red' }}>{error ? error : ""}</div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div></div>
                 <div style={{ float: 'right' }}>{new Date(Date.parse(props.date)).toLocaleString()}</div>
