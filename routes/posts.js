@@ -16,6 +16,7 @@ router.post("/posts", verifyToken, async (req, res) => {
   try {
     const post = new Post(req.body);
     const result = await post.save();
+    res.sendStatus(200);
   } catch (err) {
     res.status(500).send();
   }
