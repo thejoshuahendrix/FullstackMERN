@@ -4,7 +4,7 @@ const Bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const { response } = require("express");
+const { res } = require("express");
 dotenv.config();
 
 function generateAccessToken(username) {
@@ -35,38 +35,36 @@ router.delete("/:id", verifyToken, async (req, res) => {
   }
 });
 
-router.post("/register", async (request, response) => {
+router.post("/register", async (req, res) => {
   try {
-    request.body.password = Bcrypt.hashSync(request.body.password, 10);
-    var user = new User(request.body);
+    req.body.password = Bcrypt.hashSync(req.body.password, 10);
+    var user = new User(req.body);
     var result = await user.save();
-    response.status(200).send(result);
+    res.status(200).send(result);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 
-router.post("/login", async (request, response) => {
+router.post("/login", async (req, res) => {
   try {
-    const user = await User.findOne({ name: request.body.name }).exec();
+    const user = await User.findOne({ name: req.body.name }).exec();
     if (!user) {
-      return response
-        .status(400)
-        .send({ message: "The username does not exist" });
+      return res.status(400).send({ message: "The username does not exist" });
     }
-    if (!Bcrypt.compareSync(request.body.password, user.password)) {
-      return response.status(400).send({ message: "The password is invalid" });
+    if (!Bcrypt.compareSync(req.body.password, user.password)) {
+      return res.status(400).send({ message: "The password is invalid" });
     }
-    //response.send("The username and password combination is correct!");
+    //res.send("The username and password combination is correct!");
     //Auth JWT Somewhere here
     const token = generateAccessToken({
-      username: request.body.name,
+      username: req.body.name,
       role: user.role,
     });
-    response.status(200).json(token);
+    res.status(200).json(token);
   } catch (error) {
     console.log(error);
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 

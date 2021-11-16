@@ -3,25 +3,26 @@ const router = express.Router();
 const Customer = require("../models/Customer");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const { res } = require("express");
 dotenv.config();
 
 router.get("/customer", verifyToken, async (req, res) => {
   try {
     Customer.find()
       .sort({ date: -1 })
-      .then((customers) => res.json(customers));
+      .then((customers) => res.status(200).json(customers));
   } catch (err) {
-    response.status(500).send(err);
+    res.status(500).send(err);
   }
 });
 
-router.post("/customer", verifyToken, async (request, response) => {
+router.post("/customer", verifyToken, async (req, res) => {
   try {
-    var customer = new Customer(request.body);
+    var customer = new Customer(req.body);
     var result = await customer.save();
-    response.send(result);
+    res.status(200).send(result);
   } catch (error) {
-    response.status(500).send(error);
+    res.status(500).send(error);
   }
 });
 
