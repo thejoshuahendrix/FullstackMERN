@@ -26,7 +26,6 @@ router.delete("/posts/:id", verifyToken, async (req, res) => {
 });
 
 router.post("/posts/update/:id", async (req, res) => {
-  console.log(req.body);
   Post.findByIdAndUpdate(req.params.id, req.body, function (err, result) {
     if (err) {
       res.status(500).send();
