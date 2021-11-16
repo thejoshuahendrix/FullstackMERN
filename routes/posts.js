@@ -31,7 +31,7 @@ router.post("/posts/update/:id", async (req, res) => {
     if (err) {
       res.status(500).send();
     } else {
-      console.log(result);
+      res.status(200).send();
     }
   });
 });
