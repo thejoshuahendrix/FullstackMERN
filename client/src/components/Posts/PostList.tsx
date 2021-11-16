@@ -19,7 +19,7 @@ const PostList = (props: PropType) => {
     }, [token])
 
     const handleDelete = (id: string) => {
-        fetch(process.env.REACT_APP_SERVER_URL+'/api/posts/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } })
+        fetch('/api/posts/' + id, { method: "DELETE", headers: { "Authorization": "Bearer " + token } })
             .then(response => response.json());
         window.location.replace('/posts')
 
