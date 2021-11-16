@@ -6,18 +6,25 @@ const Register = () => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const user = { name, password, email };
-        fetch(process.env.REACT_APP_SERVER_URL+'/api/register', {
+        fetch(process.env.REACT_APP_SERVER_URL + '/api/register', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)
         }).then(async (res) => {
-            let response = await res.json();
-            console.log(response);
-            setPassword('');
-            window.location.replace('/')
+            if (res.status === 200) {
+
+                let response = await res.json();
+                console.log(response);
+                setPassword('');
+                window.location.replace('/')
+            }
+            else {
+                setError('Please enter all fields with valid input');
+            }
         })
     }
 
@@ -56,6 +63,7 @@ const Register = () => {
 
                     </Input>
                     <Button style={{ marginTop: 20 }} type='submit' onClick={handleSubmit}>Register</Button>
+                    <div style={{ color: 'red' }}>{error ? error : ""}</div>
                 </Form>
             </div>
         </div >

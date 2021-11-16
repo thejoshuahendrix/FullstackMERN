@@ -11,16 +11,23 @@ const AddPost = (props: PropType) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const token = localStorage.getItem('token');
+    const [error, setError] = useState('');
+
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const post = { name, title, content };
-
         fetch('/api/posts', {
             method: "POST",
             headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
             body: JSON.stringify(post)
-        });
-        window.location.replace('/posts')
+        }).then(async (res) => {
+            if (res.status === 200) {
+                window.location.replace('/posts')
+
+            } else {
+                setError("Enter all fields")
+            }
+        })
     }
 
 
@@ -45,7 +52,9 @@ const AddPost = (props: PropType) => {
 
                 </Input>
                 <Button type='submit' onClick={handleSubmit}>Add Post</Button>
+                <div style={{ color: 'red' }}>{error ? error : ""}</div>
             </Form >
+
         </div>
     )
 }

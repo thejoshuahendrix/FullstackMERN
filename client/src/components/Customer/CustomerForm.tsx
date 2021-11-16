@@ -9,7 +9,7 @@ export const CustomerForm = () => {
     const [street, setStreet] = useState('')
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
-
+    const [error,setError] = useState('')
     const token = localStorage.getItem('token');
 
     const handleSubmit = (e: any) => {
@@ -19,8 +19,15 @@ export const CustomerForm = () => {
             method: "POST",
             headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
             body: JSON.stringify(customer)
-        })
+        }).then(res=>{
+            if(res.status===200){
         window.location.replace('/customer')
+
+            }else{
+                setError('Please enter all fields with valid input')
+            }
+        })
+        
     }
 
     return (
@@ -40,7 +47,9 @@ export const CustomerForm = () => {
                 <Label>State:</Label>
                 <Input type='text' name='state' onChange={(e) => setState(e.target.value)}></Input>
                 <Button style={{margin:'2rem'}} type='submit' onClick={handleSubmit}>Add Customer</Button>
+                <div style={{color:'red'}}>{error?error:""}</div>
             </Form>
+
         </div>
     )
 }

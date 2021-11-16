@@ -17,7 +17,7 @@ router.post("/posts", verifyToken, async (req, res) => {
     const post = new Post(req.body);
     const result = await post.save();
   } catch (err) {
-    console.log(err);
+    res.status(500).send();
   }
 });
 
@@ -29,7 +29,7 @@ router.post("/posts/update/:id", async (req, res) => {
   console.log(req.body);
   Post.findByIdAndUpdate(req.params.id, req.body, function (err, result) {
     if (err) {
-      console.log(err);
+      res.status(500).send();
     } else {
       console.log(result);
     }
