@@ -15,6 +15,7 @@ import CustomerPage from './components/Customer/CustomerPage';
 import jwt from 'jsonwebtoken';
 import MyAccount from './components/User/MyAccount';
 import About from './components/About';
+import Contact from './components/Contact';
 
 //Decoded JWT
 let decoded: any = jwt.decode(localStorage.getItem('token') ?? "");
@@ -41,6 +42,7 @@ const App = () => {
           <Route path='/posts' component={() => <PostList isLoggedIn={isLoggedIn} isAdmin={isAdmin} username={decoded ? decoded.username : ""} />} />
           <Route path='/account' component={() => <MyAccount isLoggedIn={isLoggedIn} />} />
           <Route path='/about' component={() => <About  isLoggedIn={isLoggedIn}/>} />
+          <Route path='/about' component={() => <Contact isLoggedIn={isLoggedIn} username={user}/>} />
         </Switch>
       </Router>
 
