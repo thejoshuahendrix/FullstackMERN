@@ -42,7 +42,7 @@ const App = () => {
           <Route path='/posts' component={() => <PostList isLoggedIn={isLoggedIn} isAdmin={isAdmin} username={decoded ? decoded.username : ""} />} />
           <Route path='/account' component={() => <MyAccount isLoggedIn={isLoggedIn} />} />
           <Route path='/about' component={() => <About  isLoggedIn={isLoggedIn}/>} />
-          <Route path='/about' component={() => <Contact isLoggedIn={isLoggedIn} username={user}/>} />
+          <Route path='/contact' component={() => <Contact isLoggedIn={isLoggedIn} username={user}/>} />
         </Switch>
       </Router>
 
