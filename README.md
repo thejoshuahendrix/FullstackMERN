@@ -1,6 +1,6 @@
 # FullstackMERN
 The framework for user authentication managed in a MongoDB
-
+[Live Demo](http://jwtmern.herokuapp.com)
 
 ## Setup
 Create a .env file with your info from example-env.txt
