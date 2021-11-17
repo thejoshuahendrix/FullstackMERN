@@ -9,7 +9,7 @@ export const CustomerForm = () => {
     const [street, setStreet] = useState('')
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
-    const [error,setError] = useState('')
+    const [error, setError] = useState('')
     const token = localStorage.getItem('token');
 
     const handleSubmit = (e: any) => {
@@ -19,21 +19,21 @@ export const CustomerForm = () => {
             method: "POST",
             headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
             body: JSON.stringify(customer)
-        }).then(res=>{
-            if(res.status===200){
-        window.location.replace('/customer')
+        }).then(res => {
+            if (res.status === 200) {
+                window.location.replace('/customer')
 
-            }else{
+            } else {
                 setError('Please enter all fields with valid input')
             }
         })
-        
+
     }
 
     return (
-        <div style={{margin:'2rem', padding:'2rem'}}>
-        
-            <Form > 
+        <div style={{ margin: '2rem', padding: '2rem' }}>
+
+            <Form >
                 <Label>First Name:</Label>
                 <Input type='text' name='fname' onChange={(e) => setFname(e.target.value)}></Input>
                 <Label>Last Name:</Label>
@@ -46,8 +46,8 @@ export const CustomerForm = () => {
                 <Input type='text' name='city' onChange={(e) => setCity(e.target.value)}></Input>
                 <Label>State:</Label>
                 <Input type='text' name='state' onChange={(e) => setState(e.target.value)}></Input>
-                <Button style={{margin:'2rem'}} type='submit' onClick={handleSubmit}>Add Customer</Button>
-                <div style={{color:'red'}}>{error?error:""}</div>
+                <Button style={{ margin: '2rem' }} type='submit' onClick={handleSubmit}>Add Customer</Button>
+                <div style={{ color: 'red' }}>{error ? error : ""}</div>
             </Form>
 
         </div>

@@ -18,7 +18,6 @@ const Register = () => {
             if (res.status === 200) {
 
                 let response = await res.json();
-                console.log(response);
                 setPassword('');
                 window.location.replace('/')
             }

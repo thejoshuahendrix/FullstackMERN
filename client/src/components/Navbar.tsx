@@ -43,6 +43,9 @@ const NavbarHeader = (props: PropTypes) => {
                         <NavItem>
                             <NavLink href="/customer">Customers</NavLink>
                         </NavItem>
+                        <NavItem>
+                            <NavLink href="/about">About</NavLink>
+                        </NavItem>
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle nav caret>
                                 Account:{props.isLoggedIn ? <Badge >{props.user} Logged In</Badge> : <Badge>Logged Out</Badge>}
