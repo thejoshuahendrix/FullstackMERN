@@ -10,7 +10,7 @@ type PropType ={
 const CustomerPage = (props : PropType) => {
     return (
         <div style={{ margin: '2rem', padding: '2rem' }}>
-            <Hero isLoggedIn={props.isLoggedIn}header="Customer Records"/>
+            <Hero isLoggedIn={props.isLoggedIn} header="Customer Records"/>
             <CustomerForm />
             <CustomerList />
         </div>

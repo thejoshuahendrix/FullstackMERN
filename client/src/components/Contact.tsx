@@ -9,7 +9,9 @@ const Contact = ({username, isLoggedIn}:PropTypes) => {
     return (
         <div>
             <Form>
-            <Input type="text" placeholder={isLoggedIn?name:""} />
+            <Input type="text" name="name" placeholder={isLoggedIn?name:""} />
+            <Input type="email" name="email" placeholder="Please enter email..." />
+            <Input type="text" name="message" placeholder="Enter a message..." />
             </Form>
         </div>
     )
