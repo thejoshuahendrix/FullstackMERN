@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Input, Form, Label} from 'reactstrap';
+import {Input, Form, Label, Button} from 'reactstrap';
 type PropTypes = { 
     username:string,
     isLoggedIn:boolean
@@ -15,6 +15,7 @@ const Contact = ({username, isLoggedIn}:PropTypes) => {
             <Input type="email" name="email" placeholder="Please enter email..." />
             <Label>Message</Label>
             <Input type="text" name="message" placeholder="Enter a message..." />
+            <Button>Submit</Button>
             </Form>
         </div>
     )
