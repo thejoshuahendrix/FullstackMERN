@@ -11,7 +11,7 @@ const Hero = (props: PropType) => {
     <div style={{margin:'2rem', padding:'2rem'}}>
       <Jumbotron>
         <h1 className="display-3">{props.header}</h1>
-        <p className="lead">This is a simple example of a fullstack MERN app styled with Bootstrap</p>
+        <p className="lead">This is an example of a fullstack MERN app styled with Bootstrap</p>
         <hr className="my-2" />
         <p>It uses its own API and Mongo DB to store info on the server and manage user authentication with the help of JSON web token</p>
         <p className="lead">
